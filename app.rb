@@ -2,8 +2,6 @@ require "sinatra"
 require "stringio"
 
 post "/execute" do
-  code = request.body.read
-
   # Redirect stdout to a string buffer
   stdout_buffer = StringIO.new
   original_stdout = $stdout
@@ -15,6 +13,7 @@ post "/execute" do
 
   begin
     # Execute the code
+    code = params[:code] # Access the "code" parameter from the form data
     result = eval(code) # Note: Be cautious when executing arbitrary code like this
   rescue Exception => e
     # Capture any error and store it
